@@ -1,4 +1,3 @@
-const { get } = require("../../api");
 const pool = require("./pool");
 
 const db = {
