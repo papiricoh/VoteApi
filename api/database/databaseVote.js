@@ -17,10 +17,10 @@ const db = {
         }
     },
 
-    async createParty(name, label, ideology, user_id, logo) {
+    async createParty(name, label, ideology, user_id, logo, color) {
         const connection = await pool.getConnection();
         try {
-            const result = await connection.query(`INSERT INTO parties (name, label, ideology, leader, logo) VALUES (?, ?, ?, ?, ?)`, [name, label, ideology, user_id, logo]);
+            const result = await connection.query(`INSERT INTO parties (name, label, ideology, leader, logo, color) VALUES (?, ?, ?, ?, ?, ?)`, [name, label, ideology, user_id, logo, color]);
             const result2 = await connection.query(`INSERT INTO users_parties (user_id, party_id) VALUES (?, ?)`, [user_id, result[0].insertId]);
             return result[0].insertId;
         }catch (err) {
@@ -47,7 +47,7 @@ const db = {
     
     
 
-    
+
 }
 
 module.exports = db;

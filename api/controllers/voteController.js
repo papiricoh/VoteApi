@@ -16,14 +16,14 @@ exports.wellcome = async (req, res) => {
 }
 
 exports.createParty = async (req, res) => {
-    const { name, label, ideology, user_id, logo } = req.body;
+    const { name, label, ideology, user_id, logo, color } = req.body;
 
     if(await db.getParty(user_id)) {
         res.status(400).json({error: "User already has a party"});
         return;
     }
 
-    await db.createParty(name, label, ideology, user_id, logo).then((result) => {
+    await db.createParty(name, label, ideology, user_id, logo, color).then((result) => {
         res.status(200).json(result);
     }).catch((err) => {
         res.status(400).json(err);

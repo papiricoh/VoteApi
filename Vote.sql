@@ -22,6 +22,7 @@ CREATE TABLE parties(
     name VARCHAR(255) NOT NULL,
     logo VARCHAR(255),
     ideology int NOT NULL,
+    color VARCHAR(255) NOT NULL,
     leader int NOT NULL,
 
 
