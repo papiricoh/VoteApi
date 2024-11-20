@@ -15,6 +15,7 @@ exports.wellcome = async (req, res) => {
     });
 }
 
+
 exports.createParty = async (req, res) => {
     const { name, label, ideology, user_id, logo, color } = req.body;
 
