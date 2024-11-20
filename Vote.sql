@@ -85,3 +85,14 @@ CREATE TABLE votes(
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (law_id) REFERENCES laws(id)
 );
+
+CREATE TABLE government_members(
+    id int NOT NULL AUTO_INCREMENT,
+    role VARCHAR(255) NOT NULL,
+    user_id int NOT NULL,
+    party_id int NOT NULL,
+
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (party_id) REFERENCES parties(id)
+);

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mainController = require("../controllers/mainController")
+const voteController = require("../controllers/voteController")
 const websocketCotroller = require("../controllers/websocketController");
 
 /*
@@ -23,6 +24,7 @@ MAIN ROUTES
 #############################################################
 */
 //router.post('/club', clubController.getClub)
+router.post('/wellcome', voteController.wellcome)
 
 
 /*

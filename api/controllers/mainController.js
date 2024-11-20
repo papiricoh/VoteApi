@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
-const tokenSaltRounds = 16;
+const saltRounds = 2;
+const tokenSaltRounds = 6;
 const db = require('../database/databaseMain');
 
 async function generateToken(username) {
