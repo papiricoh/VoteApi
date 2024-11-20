@@ -20,7 +20,7 @@ CREATE TABLE parties(
     id int NOT NULL AUTO_INCREMENT,
     label VARCHAR(6) NOT NULL,
     name VARCHAR(255) NOT NULL,
-    logo VARCHAR(255) NOT NULL,
+    logo VARCHAR(255),
     ideology int NOT NULL,
     leader int NOT NULL,
 
@@ -90,9 +90,7 @@ CREATE TABLE government_members(
     id int NOT NULL AUTO_INCREMENT,
     role VARCHAR(255) NOT NULL,
     user_id int NOT NULL,
-    party_id int NOT NULL,
 
     PRIMARY KEY (id),
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (party_id) REFERENCES parties(id)
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
