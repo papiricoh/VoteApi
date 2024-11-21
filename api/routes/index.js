@@ -25,8 +25,11 @@ MAIN ROUTES
 */
 //router.post('/club', clubController.getClub)
 router.post('/wellcome', voteController.wellcome)
+router.post('/parties', voteController.getAllParties)
 router.post('/parties/create', voteController.createParty)
+router.post('/parties/self', voteController.getParty)
 
+router.post('/laws/new', voteController.createLaw)
 
 /*
 #############################################

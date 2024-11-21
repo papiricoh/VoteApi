@@ -42,9 +42,35 @@ const db = {
         }catch (err) {
             throw new Error("DB error: " + err);
         }
+    },
+
+    async getAllParties() {
+        const connection = await pool.getConnection();
+        try {
+            const [rows] = await connection.query(`SELECT * FROM parties`);
+            return rows;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }
+    },
+    
+
+    /**
+     * Laws DB
+     */
+    async createLaw(name, description, party_id, user_id, articles) {
+        const connection = await pool.getConnection();
+        try {
+            const result = await connection.query(`INSERT INTO laws (title, description, party_id, user_id, status) VALUES (?, ?, ?, ?, 'pending')`, [name, description, party_id, user_id]);
+            const law_id = result[0].insertId;
+            for (let i = 0; i < articles.length; i++) {
+                await connection.query(`INSERT INTO articles (law_id, title, content) VALUES (?, ?, ?)`, [law_id, articles[i].title, articles[i].content]);
+            }
+            return law_id;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }
     }
-    
-    
 
 
 }
