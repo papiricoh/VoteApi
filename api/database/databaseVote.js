@@ -70,6 +70,16 @@ const db = {
         }catch (err) {
             throw new Error("DB error: " + err);
         }
+    },
+
+    async getAllLaws() {
+        const connection = await pool.getConnection();
+        try {
+            const [rows] = await connection.query(`SELECT * FROM laws`);
+            return rows;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }
     }
 
 

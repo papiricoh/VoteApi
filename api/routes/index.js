@@ -30,6 +30,7 @@ router.post('/parties/create', voteController.createParty)
 router.post('/parties/self', voteController.getParty)
 
 router.post('/laws/new', voteController.createLaw)
+router.post('/laws', voteController.getAllLaws)
 
 /*
 #############################################

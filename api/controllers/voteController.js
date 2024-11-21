@@ -66,3 +66,11 @@ exports.createLaw = async (req, res) => {
         res.status(401).json({error: "User has no party"});
     }
 }
+
+exports.getAllLaws = async (req, res) => {  
+    await db.getAllLaws().then((result) => {
+        res.status(200).json(result);
+    }).catch((err) => {
+        res.status(400).json(err);
+    });
+}
