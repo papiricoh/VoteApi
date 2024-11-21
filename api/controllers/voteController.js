@@ -1,3 +1,4 @@
+const e = require('express');
 const db = require('../database/databaseVote');
 
 
@@ -69,6 +70,14 @@ exports.createLaw = async (req, res) => {
 
 exports.getAllLaws = async (req, res) => {  
     await db.getAllLaws().then((result) => {
+        res.status(200).json(result);
+    }).catch((err) => {
+        res.status(400).json(err);
+    });
+}
+
+exports.getAllPendingLaws = async (req, res) => {
+    await db.getAllPendingLaws().then((result) => {
         res.status(200).json(result);
     }).catch((err) => {
         res.status(400).json(err);

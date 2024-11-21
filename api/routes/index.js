@@ -31,6 +31,15 @@ router.post('/parties/self', voteController.getParty)
 
 router.post('/laws/new', voteController.createLaw)
 router.post('/laws', voteController.getAllLaws)
+router.post('/laws/pending', voteController.getAllPendingLaws)
+
+/*
+#############################################
+###############   GOVERNMENT  ###############
+#############################################
+*/
+//router.post('/government', govController.getGovernment)
+
 
 /*
 #############################################

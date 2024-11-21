@@ -80,8 +80,17 @@ const db = {
         }catch (err) {
             throw new Error("DB error: " + err);
         }
-    }
+    },
 
+    async getAllPendingLaws() {
+        const connection = await pool.getConnection();
+        try {
+            const [rows] = await connection.query(`SELECT * FROM laws WHERE status = 'pending'`);
+            return rows;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }
+    }
 
 }
 
