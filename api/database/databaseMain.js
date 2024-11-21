@@ -5,6 +5,7 @@ const db = {
         const connection = await pool.getConnection();
         const sql = "SELECT * FROM users";
         const [rows] = await connection.query(sql);
+        connection.release();
         return rows;
     },
 
@@ -16,6 +17,8 @@ const db = {
             return result;
         }catch (err) {
             throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
         }
     },
 
@@ -30,6 +33,8 @@ const db = {
             return rows[0];
         }catch (err) {
             throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
         }
     },
 
@@ -44,6 +49,8 @@ const db = {
             return rows[0];
         }catch (err) {
             throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
         }
     },
 
@@ -59,6 +66,8 @@ const db = {
             return token;
         }catch (err) {
             throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
         }
     },
 

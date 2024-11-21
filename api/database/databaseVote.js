@@ -13,6 +13,8 @@ const db = {
             return rows;
         }catch (err) {
             throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
         }
     },
 
@@ -24,6 +26,8 @@ const db = {
             return result[0].insertId;
         }catch (err) {
             throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
         }
     },
 
@@ -41,6 +45,8 @@ const db = {
             return rows[0];
         }catch (err) {
             throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
         }
     },
 
@@ -51,6 +57,8 @@ const db = {
             return rows;
         }catch (err) {
             throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
         }
     },
     
@@ -69,6 +77,8 @@ const db = {
             return law_id;
         }catch (err) {
             throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
         }
     },
 
@@ -79,6 +89,8 @@ const db = {
             return rows;
         }catch (err) {
             throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
         }
     },
 
@@ -89,6 +101,8 @@ const db = {
             return rows;
         }catch (err) {
             throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
         }
     }
 

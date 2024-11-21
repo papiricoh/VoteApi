@@ -32,17 +32,24 @@ exports.createGovernmentRole = async (req, res) => {
         res.status(404).json({error: "Target user not found"});
         return;
     }
-    /*
-    db.removeFromGovernment(target_id).then((result) => {
-        console.log("Removed from government");
-    }).catch((err) => {
-        console.log("Error removing from government");
-    });
-    */
-
-    db.createGovernmentRole(target_id, role).then((result) => {
-        res.status(200).json(result);
-    }).catch((err) => {
-        res.status(400).json(err);
-    });
+    if(!await db.getGovernmentRole(target_id)) {
+        
+        await db.createGovernmentRole(target_id, role).then((result) => {
+            res.status(200).json(result);
+            return;
+        }).catch((err) => {
+            res.status(400).json(err);
+            return;
+        });
+        return;
+    }else {
+        await db.alterFromGovernment(target_id, role).then( async (result) => {
+            res.status(200).json(result);
+        }).catch((err) => {
+            console.log("Error removing from government");
+            res.status(400).json(err);
+        });
+        return;
+    }
+    
 }

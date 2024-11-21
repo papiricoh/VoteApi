@@ -13,6 +13,8 @@ const db = {
             return rows;
         }catch (err) {
             throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
         }
     },
 
@@ -23,6 +25,8 @@ const db = {
             return result[0].insertId;
         }catch (err) {
             throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
         }
     },
 
@@ -33,6 +37,32 @@ const db = {
             return result[0].insertId;
         }catch (err) {
             throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    },
+
+    async getGovernmentRole(user_id) {
+        const connection = await pool.getConnection();
+        try {
+            const [rows] = await connection.query(`SELECT * FROM government_members WHERE user_id = ?`, [user_id]);
+            return rows[0];
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    },
+
+    async alterFromGovernment(user_id, role) {
+        const connection = await pool.getConnection();
+        try {
+            const result = await connection.query(`UPDATE government_members SET role = ? WHERE user_id = ?`, [role, user_id]);
+            return result[0].insertId;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
         }
     }
 
