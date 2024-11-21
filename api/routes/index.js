@@ -3,6 +3,7 @@ const router = express.Router();
 const mainController = require("../controllers/mainController")
 const voteController = require("../controllers/voteController")
 const websocketCotroller = require("../controllers/websocketController");
+const govController = require("../controllers/govController");
 
 /*
 #############################################################
@@ -38,7 +39,7 @@ router.post('/laws/pending', voteController.getAllPendingLaws)
 ###############   GOVERNMENT  ###############
 #############################################
 */
-//router.post('/government', govController.getGovernment)
+router.post('/government', govController.getGovernment)
 
 
 /*

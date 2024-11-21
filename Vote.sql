@@ -11,6 +11,7 @@ CREATE TABLE users(
     last_name VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     token VARCHAR(255) NOT NULL,
+    perms INT NOT NULL DEFAULT 0,
 
 
     PRIMARY KEY (id)
