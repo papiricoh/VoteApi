@@ -26,14 +26,14 @@ exports.createGovernmentRole = async (req, res) => {
         return;
     }
 
-    //TODO check if target user exists and not already in government
+    //check if target user exists and not already in government
     const target = await dbMain.getUserWithId(target_id);
     if(!target) {
         res.status(404).json({error: "Target user not found"});
         return;
     }
+
     if(!await db.getGovernmentRole(target_id)) {
-        
         await db.createGovernmentRole(target_id, role).then((result) => {
             res.status(200).json(result);
             return;
