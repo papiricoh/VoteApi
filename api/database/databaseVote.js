@@ -43,6 +43,43 @@ const db = {
         }
     },
 
+    async leaveParty(user_id) {
+        const connection = await pool.getConnection();
+        try {
+            const result = await connection.query(`DELETE FROM users_parties WHERE user_id = ?`, [user_id]);
+            return result[0].insertId;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    },
+
+    async getParty(id) {
+        const connection = await pool.getConnection();
+        try {
+            const query = `Select * from parties where id = ?`;
+            const [rows] = await connection.query(query, [id]);
+            return rows[0];
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    },
+
+    async changePartyLeader(user_id, party_id) {
+        const connection = await pool.getConnection();
+        try {
+            const result = await connection.query(`UPDATE parties SET leader = ? WHERE id = ?`, [user_id, party_id]);
+            return result[0].insertId;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    },
+
     async getParty(id) {
         const connection = await pool.getConnection();
         try {
