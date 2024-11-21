@@ -61,6 +61,7 @@ CREATE TABLE laws(
     status VARCHAR(255) NOT NULL,
     party_id int NOT NULL,
     user_id int NOT NULL,
+    law_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     PRIMARY KEY (id),
     FOREIGN KEY (party_id) REFERENCES parties(id),

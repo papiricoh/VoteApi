@@ -83,3 +83,19 @@ exports.getAllPendingLaws = async (req, res) => {
         res.status(400).json(err);
     });
 }
+
+exports.getAllSignedLaws = async (req, res) => {
+    await db.getAllSignedLaws().then((result) => {
+        res.status(200).json(result);
+    }).catch((err) => {
+        res.status(400).json(err);
+    });
+}
+
+exports.getAllPendingLaws = async (req, res) => {
+    await db.getAllPendingLaws().then((result) => {
+        res.status(200).json(result);
+    }).catch((err) => {
+        res.status(400).json(err);
+    });
+}

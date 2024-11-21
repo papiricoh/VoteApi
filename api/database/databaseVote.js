@@ -104,6 +104,18 @@ const db = {
         }finally {
             connection.release();
         }
+    },
+
+    async getAllSignedLaws() {
+        const connection = await pool.getConnection();
+        try {
+            const [rows] = await connection.query(`SELECT * FROM laws WHERE status = 'signed'`);
+            return rows;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
     }
 
 }
