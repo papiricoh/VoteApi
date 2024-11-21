@@ -6,6 +6,7 @@ class SessionManager {
             this.seats = 0;
             this.forVotes = 0;
             this.againstVotes = 0;
+            this.law = null;
             SessionManager.instance = this;
             console.log("SessionManager created");
             
@@ -14,11 +15,11 @@ class SessionManager {
         return SessionManager.instance;
     }
 
-    startSession(seats) {
+    startSession(seats, law) {
         this.users.clear();
         this.seats = seats;
+        this.law = law;
         this.isInSession = true;
-
     }
 
     addUser(userId) {
