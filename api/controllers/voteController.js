@@ -9,7 +9,7 @@ exports.test = async (req, res) => {
 
 
 exports.wellcome = async (req, res) => {
-    db.getGovernment().then((result) => {
+    await db.getGovernment().then((result) => {
         res.status(200).json(result);
     }).catch((err) => {
         res.status(400).json(err);

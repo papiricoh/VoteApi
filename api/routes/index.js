@@ -40,7 +40,7 @@ router.post('/laws/pending', voteController.getAllPendingLaws)
 #############################################
 */
 router.post('/government', govController.getGovernment)
-
+router.post('/government/new_role', govController.createGovernmentRole)
 
 /*
 #############################################
