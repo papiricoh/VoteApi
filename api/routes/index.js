@@ -43,6 +43,15 @@ router.post('/laws/pending', voteController.getAllPendingLaws)
 router.post('/government', govController.getGovernment)
 router.post('/government/new_role', govController.createGovernmentRole)
 
+
+/*
+#############################################
+##############   VOTE SESSION  ##############
+#############################################
+*/
+
+
+
 /*
 #############################################
 ###############   WEBSOCKETS  ###############
@@ -50,7 +59,6 @@ router.post('/government/new_role', govController.createGovernmentRole)
 */
 function setupWebSocketRoutes(app) {
     app.ws(defaultRoute + '/web', websocketCotroller.mainWS);
-    
 }
 
 module.exports = {router, setupWebSocketRoutes};

@@ -31,6 +31,18 @@ const db = {
         }
     },
 
+    async joinParty(user_id, party_id) {
+        const connection = await pool.getConnection();
+        try {
+            const result = await connection.query(`INSERT INTO users_parties (user_id, party_id) VALUES (?, ?)`, [user_id, party_id]);
+            return result[0].insertId;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    },
+
     async getParty(id) {
         const connection = await pool.getConnection();
         try {

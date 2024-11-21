@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 2;
 const tokenSaltRounds = 6;
 const db = require('../database/databaseMain');
+const voteDb = require('../database/databaseVote');
 
 async function generateToken(username) {
     return await bcrypt.hashSync(username, tokenSaltRounds);
@@ -18,6 +19,8 @@ exports.register = async (req, res) => {
         bcrypt.hash(data.password, saltRounds, async function(err, hash) {
             try {
                 const result = await db.register(data.username, data.email ?? null, hash, await generateToken(data.username), data.first_name ?? "John", data.last_name ?? "Doe");
+                await voteDb.joinParty(result, 1);
+                
                 res.status(200).json(result);
 
             } catch (error) {

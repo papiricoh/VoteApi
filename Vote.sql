@@ -14,7 +14,9 @@ CREATE TABLE users(
     perms INT NOT NULL DEFAULT 0,
 
 
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    UNIQUE (email),
+    UNIQUE (username)
 );
 
 CREATE TABLE parties(
@@ -24,10 +26,12 @@ CREATE TABLE parties(
     logo VARCHAR(255),
     ideology int NOT NULL,
     color VARCHAR(255) NOT NULL,
-    leader int NOT NULL,
+    leader int,
 
 
     PRIMARY KEY (id),
+    UNIQUE (label),
+    UNIQUE (leader),
     FOREIGN KEY (leader) REFERENCES users(id)
 );
 
@@ -65,7 +69,8 @@ CREATE TABLE laws(
 
     PRIMARY KEY (id),
     FOREIGN KEY (party_id) REFERENCES parties(id),
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    UNIQUE (title)
 );
 
 CREATE TABLE articles(
@@ -97,3 +102,6 @@ CREATE TABLE government_members(
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+
+INSERT INTO parties (label, name, logo, ideology, color) VALUES ('IND', 'Independiente', '', 0, '#6a6a6a');
