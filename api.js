@@ -31,7 +31,7 @@ const simpleAuth = async (req, res, next) => {
       const user = await db.getUserWithId(id);
       if (id == user.id && token == user.token) {
         //console.log('User authenticated: ', user.username);
-        
+        req.user = user;
         return next();
       }
     } catch (error) {

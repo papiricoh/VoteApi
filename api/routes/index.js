@@ -29,6 +29,8 @@ router.post('/wellcome', voteController.wellcome)
 router.post('/parties', voteController.getAllParties)
 router.post('/parties/create', voteController.createParty)
 router.post('/parties/self', voteController.getParty)
+router.post('/parties/leave', voteController.leaveParty)
+router.post('/parties/transfer', voteController.transferPartyLeader)
 
 router.post('/laws/new', voteController.createLaw)
 router.post('/laws', voteController.getAllLaws)

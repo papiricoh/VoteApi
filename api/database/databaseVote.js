@@ -80,7 +80,7 @@ const db = {
         }
     },
 
-    async getParty(id) {
+    async getPartyByUserId(user_id) {
         const connection = await pool.getConnection();
         try {
             const query = `
@@ -90,7 +90,7 @@ const db = {
             INNER JOIN parties ON users_parties.party_id = parties.id
             WHERE users.id = ? LIMIT 1;
             `;
-            const [rows] = await connection.query(query, [id]);
+            const [rows] = await connection.query(query, [user_id]);
             return rows[0];
         }catch (err) {
             throw new Error("DB error: " + err);

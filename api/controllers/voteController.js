@@ -50,6 +50,46 @@ exports.getAllParties = async (req, res) => {
     });
 }
 
+exports.leaveParty = async (req, res) => {
+    const { user_id } = req.body;
+    const user = req.user;
+    if(user.id == user_id || user.perms > 2) {
+        const party = await db.getParty(user_id);
+        if(party.leader == user_id) {
+            res.status(400).json({error: "Cannot leave party as leader"});
+            return;
+        }
+        await db.leaveParty(user_id).then(async (result) => {
+
+            await db.joinParty(user_id, 1).then((result) => {
+                res.status(200).json(result);
+            }).catch((err) => {
+                res.status(400).json(err);
+            });
+        }).catch((err) => {
+            res.status(400).json(err);
+        });
+    }
+
+}
+
+exports.transferPartyLeader = async (req, res) => {
+    const { user_id, target_id } = req.body;
+    const user = req.user;
+    if(user.id == user_id || user.perms > 8) {
+        const party = await db.getParty(user_id);
+        if(party.leader != user_id) {
+            res.status(400).json({error: "User is not party leader"});
+            return;
+        }
+        await db.changePartyLeader(target_id, party.id).then((result) => {
+            res.status(200).json(result);
+        }).catch((err) => {
+            res.status(400).json(err);
+        });
+    }
+}
+
 exports.createLaw = async (req, res) => {
     const { name, description, user_id, articles } = req.body;
 
