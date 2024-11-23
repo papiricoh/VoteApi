@@ -36,6 +36,7 @@ router.post('/laws/new', voteController.createLaw)
 router.post('/laws', voteController.getAllLaws)
 router.post('/laws/signed', voteController.getAllSignedLaws)
 router.post('/laws/pending', voteController.getAllPendingLaws)
+router.get('/laws/:id', voteController.getLaw)
 
 /*
 #############################################

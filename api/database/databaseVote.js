@@ -165,6 +165,30 @@ const db = {
         }finally {
             connection.release();
         }
+    },
+
+    async getLaw(id) {
+        const connection = await pool.getConnection();
+        try {
+            const [rows] = await connection.query(`SELECT * FROM laws WHERE id = ?`, [id]);
+            return rows;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    },
+
+    async getLawArticles(id) {
+        const connection = await pool.getConnection();
+        try {
+            const [rows] = await connection.query(`SELECT * FROM articles WHERE law_id = ?`, [id]);
+            return rows;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
     }
 
 }

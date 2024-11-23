@@ -64,7 +64,7 @@ CREATE TABLE laws(
     description TEXT NOT NULL,
     status VARCHAR(255) NOT NULL,
     party_id int NOT NULL,
-    user_id int NOT NULL,
+    user_id int,
     law_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     PRIMARY KEY (id),
@@ -105,3 +105,17 @@ CREATE TABLE government_members(
 
 
 INSERT INTO parties (label, name, logo, ideology, color) VALUES ('IND', 'Independiente', '', 0, '#6a6a6a');
+
+
+-- Insertar la constitución en la tabla `laws`
+INSERT INTO laws (title, description, status, party_id) VALUES
+('Constitución', 'Constitución de la Clase', 'signed', 1);
+
+
+SET @law_id = LAST_INSERT_ID();
+
+-- Insertar algunos artículos más desarrollados en la tabla `articles`
+INSERT INTO articles (title, content, law_id) VALUES
+('Artículo 1', 'El artículo 1 establece los derechos y libertades fundamentales de los ciudadanos, incluyendo la libertad de expresión, religión y reunión.', @law_id),
+('Artículo 2', 'El artículo 2 define la estructura del gobierno, incluyendo el poder ejecutivo, legislativo y judicial, y sus respectivas funciones y responsabilidades.', @law_id),
+('Artículo 3', 'El artículo 3 describe el proceso de enmienda de la constitución, permitiendo cambios y actualizaciones a través de un procedimiento legislativo específico.', @law_id);

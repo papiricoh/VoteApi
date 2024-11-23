@@ -139,3 +139,19 @@ exports.getAllPendingLaws = async (req, res) => {
         res.status(400).json(err);
     });
 }
+
+exports.getLaw = async (req, res) => {
+    const { id } = req.params;
+
+    await db.getLaw(id).then( async (result) => {
+        await db.getLawArticles(id).then(async (articles) => {
+            result[0].articles = articles;
+            
+            res.status(200).json(result);
+        }).catch((err) => {
+            res.status(400).json(err);
+        });
+    }).catch((err) => {
+        res.status(400).json(err);
+    });
+}
