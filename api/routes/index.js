@@ -7,7 +7,7 @@ const govController = require("../controllers/govController");
 
 /*
 #############################################################
-CORE ROUTES
+######################## CORE ROUTES ########################
 #############################################################
 */
 router.get('/', mainController.test)
@@ -21,7 +21,7 @@ router.post('/test', mainController.test)
 
 /*
 #############################################################
-MAIN ROUTES
+######################## MAIN ROUTES ########################
 #############################################################
 */
 //router.post('/club', clubController.getClub)

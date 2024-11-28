@@ -68,6 +68,19 @@ const db = {
         }
     },
 
+    async getUserParty(id) {
+        const connection = await pool.getConnection();
+        try {
+            const query = `Select * from parties where id = ?`;
+            const [rows] = await connection.query(query, [id]);
+            return rows[0];
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    },
+
     async changePartyLeader(user_id, party_id) {
         const connection = await pool.getConnection();
         try {
@@ -85,10 +98,9 @@ const db = {
         try {
             const query = `
             SELECT parties.*
-            FROM users
-            INNER JOIN users_parties ON users.id = users_parties.user_id
-            INNER JOIN parties ON users_parties.party_id = parties.id
-            WHERE users.id = ? LIMIT 1;
+            FROM parties
+            INNER JOIN users_parties ON parties.id = users_parties.party_id
+            WHERE users_parties.user_id = ?
             `;
             const [rows] = await connection.query(query, [user_id]);
             return rows[0];

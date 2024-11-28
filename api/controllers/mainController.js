@@ -3,6 +3,7 @@ const saltRounds = 2;
 const tokenSaltRounds = 6;
 const db = require('../database/databaseMain');
 const voteDb = require('../database/databaseVote');
+const govDb = require('../database/databaseGov');
 
 async function generateToken(username) {
     return await bcrypt.hashSync(username, tokenSaltRounds);
@@ -53,6 +54,11 @@ exports.login = async (req, res) => {
                     delete user.password
                     user.token = await db.newToken(user.id, await generateToken(user.username));
 
+                    user.party = await voteDb.getUserParty(user.id);
+                    
+                    user.government = await govDb.getGovernmentRole(user.id) ?? null;
+                    user.isPartyLeader = user.party.leader == user.id;
+
                     res.status(200).json(user);
                 }else {
                     res.status(404).json({ error: "invalid password"});
@@ -82,6 +88,10 @@ exports.loginToken = async (req, res) => {
                 
                 if(pass) {
                     delete user.password
+
+                    user.party = await voteDb.getUserParty(user.id);
+                    user.government = await govDb.getGovernmentRole(user.id) ?? null;
+                    user.isPartyLeader = user.party.leader == user.id;
 
                     res.status(200).json(user);
                 }else {
