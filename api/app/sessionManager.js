@@ -6,6 +6,8 @@ class SessionManager {
             this.seats = 0;
             this.forVotes = 0;
             this.againstVotes = 0;
+            this.title = "Votacion de ley";
+            this.type = "law";
             this.law = null;
             SessionManager.instance = this;
             console.log("SessionManager created");
@@ -51,6 +53,10 @@ class SessionManager {
 
     endSession() {
         this.isInSession = false;
+
+        //Check vote type
+
+        //Generate news
     }
 
 }
