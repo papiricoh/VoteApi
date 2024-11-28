@@ -18,6 +18,10 @@ exports.register = async (req, res) => {
     if(data.username && data.password) {
         bcrypt.hash(data.password, saltRounds, async function(err, hash) {
             try {
+                if (!data.email.endsWith("@myuax.com")) {
+                    res.status(404).json({ error: "invalid email"});
+                    return;
+                }
                 const result = await db.register(data.username, data.email ?? null, hash, await generateToken(data.username), data.first_name ?? "John", data.last_name ?? "Doe");
                 await voteDb.joinParty(result, 1);
                 
