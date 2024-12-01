@@ -155,3 +155,11 @@ exports.getLaw = async (req, res) => {
         res.status(400).json({error: err});
     });
 }
+
+exports.getAllRules = async (req, res) => {
+    await db.getAllRules().then((result) => {
+        res.status(200).json(result);
+    }).catch((err) => {
+        res.status(400).json({error: err});
+    });
+}

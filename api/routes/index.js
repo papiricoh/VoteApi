@@ -31,6 +31,8 @@ router.post('/parties/self', voteController.getParty)
 router.post('/parties/leave', voteController.leaveParty)
 router.post('/parties/transfer', voteController.transferPartyLeader)
 
+router.post('/rules', voteController.getAllRules)
+
 router.post('/laws/new', voteController.createLaw)
 router.post('/laws', voteController.getAllLaws)
 router.post('/laws/signed', voteController.getAllSignedLaws)

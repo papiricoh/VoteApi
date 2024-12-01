@@ -204,7 +204,19 @@ const db = {
         }finally {
             connection.release();
         }
-    }
+    },
+
+    async getAllRules() {
+        const connection = await pool.getConnection();
+        try {
+            const [rows] = await connection.query(`SELECT * FROM rules`);
+            return rows;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    },
 
 }
 

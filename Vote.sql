@@ -132,7 +132,17 @@ CREATE TABLE mails(
     FOREIGN KEY (receiver_id) REFERENCES users(id)
 );
 
+CREATE TABLE rules(
+    id int NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    value int NOT NULL,
 
+    PRIMARY KEY (id)
+);
+
+INSERT INTO rules (name, value) VALUES ('Puntos a la semana', 20);
+INSERT INTO rules (name, value) VALUES ('Infraccion menor', -10);
+INSERT INTO rules (name, value) VALUES ('Intraccion mayor', -20);
 
 INSERT INTO parties (label, name, logo, ideology, color) VALUES ('IND', 'Independiente', '', 0, '#6a6a6a');
 
