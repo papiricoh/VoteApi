@@ -114,7 +114,10 @@ const db = {
     async getAllParties() {
         const connection = await pool.getConnection();
         try {
-            const [rows] = await connection.query(`SELECT * FROM parties`);
+            const [rows] = await connection.query(`SELECT parties.*, COUNT(users_parties.user_id) AS members
+            FROM parties
+            LEFT JOIN users_parties ON parties.id = users_parties.party_id
+            GROUP BY parties.id`);
             return rows;
         }catch (err) {
             throw new Error("DB error: " + err);

@@ -24,7 +24,6 @@ router.post('/test', mainController.test)
 ######################## MAIN ROUTES ########################
 #############################################################
 */
-//router.post('/club', clubController.getClub)
 router.post('/wellcome', voteController.wellcome)
 router.post('/parties', voteController.getAllParties)
 router.post('/parties/create', voteController.createParty)

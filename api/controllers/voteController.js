@@ -147,7 +147,7 @@ exports.getLaw = async (req, res) => {
         await db.getLawArticles(id).then(async (articles) => {
             result[0].articles = articles;
             
-            res.status(200).json(result);
+            res.status(200).json(result[0]);
         }).catch((err) => {
             res.status(400).json(err);
         });
