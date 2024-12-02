@@ -2,7 +2,10 @@
 
 
 exports.mainWS = async (ws, req) => {
-    console.log('Cliente conectado');
+
+    ws.on('connection', () => {
+      console.log('Cliente conectado');
+    });
   
     ws.on('message', async (msg) => {
       console.log(`Mensaje recibido: ${msg}`);
