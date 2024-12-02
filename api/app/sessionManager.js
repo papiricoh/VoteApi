@@ -48,6 +48,7 @@ class SessionManager {
             await this.addUser(user);
         }
         
+        //await this.vote(users[0].id, "for");
         
 
         this.isInSession = true;
@@ -76,7 +77,7 @@ class SessionManager {
     async vote(userId, vote) { //vote is either "for" or "against"
         if (this.users.has(userId)) {
             this.users.get(userId).vote = vote;
-            await recalculateVotes();
+            await this.recalculateVotes();
             return true;
         }
         return false;
@@ -85,7 +86,7 @@ class SessionManager {
     async recalculateVotes() {
         this.forVotes = 0;
         this.againstVotes = 0;
-        for (let user of this.users) {
+        for (let user of this.users.values()) {
             if (user.vote == "for") {
                 this.forVotes++;
             } else if(user.vote == "against") {
