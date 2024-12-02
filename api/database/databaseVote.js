@@ -194,6 +194,42 @@ const db = {
         }
     },
 
+    async signLaw(id) {
+        const connection = await pool.getConnection();
+        try {
+            const result = await connection.query(`UPDATE laws SET status = 'signed' WHERE id = ?`, [id]);
+            return result[0].insertId;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    },
+
+    async rejectLaw(id) {
+        const connection = await pool.getConnection();
+        try {
+            const result = await connection.query(`UPDATE laws SET status = 'rejected' WHERE id = ?`, [id]);
+            return result[0].insertId;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    },
+
+    async aproveLaw(id) {
+        const connection = await pool.getConnection();
+        try {
+            const result = await connection.query(`UPDATE laws SET status = 'aproved' WHERE id = ?`, [id]);
+            return result[0].insertId;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    },
+
     async getLawArticles(id) {
         const connection = await pool.getConnection();
         try {
@@ -289,7 +325,19 @@ const db = {
         }finally {
             connection.release();
         }
-    }
+    },
+
+    async changeRule(id, value) {
+        const connection = await pool.getConnection();
+        try {
+            const result = await connection.query(`UPDATE rules SET value = ? WHERE id = ?`, [value, id]);
+            return result[0].insertId;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    },
 }
 
 module.exports = db;

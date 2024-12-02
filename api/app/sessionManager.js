@@ -1,5 +1,6 @@
 const Queue = require('./utils/Queue');
 const dbVote = require('../database/databaseVote');
+const db = require('../database/databaseVote');
 
 class SessionManager {
     constructor() {
@@ -97,10 +98,34 @@ class SessionManager {
 
     
 
-    endSession() {
+    async endSession() {
         this.isInSession = false;
 
         //Check vote type
+        var aNew = {
+            title: "",
+            subtitle: "",
+            content: ""
+        }
+
+        if(this.type == "law") {
+            const law = await db.getLaw(this.law);
+            const party = await db.getParty(law.party_id);
+            if(this.forVotes > this.againstVotes) {
+                await db.aproveLaw(law.id);
+                
+            }else {
+                await db.rejectLaw(law.id);
+            }
+        }else if (this.type == "ruleChange") {
+            if(this.forVotes > this.againstVotes) {
+                await db.changeRule(this.rule, this.ruleValue);
+                
+            }else {
+                
+            }
+        }
+        //Else if mocion de censura
 
         //Generate news
 
