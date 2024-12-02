@@ -1,6 +1,6 @@
 const e = require('express');
 const db = require('../database/databaseVote');
-
+const sessionManager = require('../app/sessionManager');
 
 
 exports.test = async (req, res) => {
@@ -178,7 +178,8 @@ exports.newSession = async (req, res) => {
 
 exports.session = async (req, res) => {
     var response = {};
-    response.inSession = true;
-
+    
+    response.inSession = sessionManager.isInSession;
+    
     res.status(200).json(response);
 }
