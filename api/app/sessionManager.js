@@ -59,6 +59,10 @@ class SessionManager {
         
 
         this.isInSession = true;
+
+        setTimeout(() => {
+            this.endSession();
+        }, sessionMinutes * 60000);
     }
 
     async getSession() {
@@ -138,6 +142,7 @@ class SessionManager {
         //Generate news
 
         this.clear();
+        console.log("Session ended");
     }
 
     clear() {
