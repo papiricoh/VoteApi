@@ -3,7 +3,7 @@
 
 exports.mainWS = async (ws, req) => {
 
-    ws.on('connection', () => {
+    ws.on('connection', async () => {
       console.log('Cliente conectado');
     });
   
