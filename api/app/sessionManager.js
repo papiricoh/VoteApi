@@ -12,6 +12,7 @@ class SessionManager {
             SessionManager.instance = this;
             console.log("SessionManager created");
             
+            
         }
 
         return SessionManager.instance;
@@ -20,6 +21,7 @@ class SessionManager {
     startSession(seats, law) {
         this.users.clear();
         this.seats = seats;
+        this.type = "law";
         this.law = law;
         this.isInSession = true;
     }
