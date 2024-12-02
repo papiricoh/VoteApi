@@ -163,3 +163,15 @@ exports.getAllRules = async (req, res) => {
         res.status(400).json({error: err});
     });
 }
+
+exports.newSession = async (req, res) => {
+    const { user_id, type } = req.body;
+    let target_id = req.body.target_id ?? null;
+    let value = req.body.value ?? null;
+
+    await db.insertSession(user_id, type, target_id, value).then((result) => {
+        res.status(200).json(result);
+    }).catch((err) => {
+        res.status(400).json({error: err});
+    });
+}

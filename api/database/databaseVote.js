@@ -218,6 +218,18 @@ const db = {
         }
     },
 
+    async insertSession(user_id, type, target_id, value) {
+        const connection = await pool.getConnection();
+        try {
+            const result = await connection.query(`INSERT INTO sessions (user_id, type, target_id, value) VALUES (?, ?, ?, ?)`, [user_id, type, target_id, value]);
+            return result[0].insertId;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    }
+
 }
 
 module.exports = db;

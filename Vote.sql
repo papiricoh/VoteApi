@@ -91,6 +91,9 @@ CREATE TABLE sessions(
     type VARCHAR(255) NOT NULL,
     session_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     target_id int,
+    value varchar(255),
+    completed BOOLEAN NOT NULL DEFAULT FALSE,
+
 
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES users(id)
