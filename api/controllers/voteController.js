@@ -175,3 +175,10 @@ exports.newSession = async (req, res) => {
         res.status(400).json({error: err});
     });
 }
+
+exports.session = async (req, res) => {
+    var response = {};
+    response.inSession = true;
+
+    res.status(200).json(response);
+}
