@@ -152,7 +152,7 @@ INSERT INTO parties (label, name, logo, ideology, color) VALUES ('IND', 'Indepen
 
 -- Insertar la constitución en la tabla `laws`
 INSERT INTO laws (title, description, status, party_id, sign) VALUES
-('Constitución', 'Constitución de la Clase', 'signed', 1, 'La Gente de la Clase');
+('Constitución', 'Constitución de la Clase', 'signed', 1, 'Xavier Foster');
 
 
 SET @law_id = LAST_INSERT_ID();
