@@ -195,6 +195,35 @@ exports.getAllPendingSessions = async (req, res) => {
     });
 }
 
+exports.startSession = async (req, res) => {
+    const { user_id, session_id } = req.body;
+
+    const sessions = await db.getSession(session_id);
+    if(sessions.length == 0) {
+        res.status(400).json({error: "No existe la sesion"});
+        return;
+    }
+    const session = sessions[0];
+
+    const users = await db.getCountUsers();
+    let seats = users.length;
+    
+    
+
+    const user = await db.getUser(user_id);
+    delete user.password;
+    
+
+    if(user.perms < 2) {
+        res.status(400).json({error: "No tienes permisos para iniciar una votacion"});
+        return;
+    }
+
+    //sessionManager.startSession(seats, type, target_id, value);
+
+    res.status(200).json("OK");
+}
+
 exports.session = async (req, res) => {
     var response = {};
     

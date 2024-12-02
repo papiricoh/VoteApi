@@ -253,8 +253,43 @@ const db = {
         }finally {
             connection.release();
         }
-    }
+    },
 
+    async getSession(id) {
+        const connection = await pool.getConnection();
+        try {
+            const [rows] = await connection.query(`SELECT * FROM sessions WHERE id = ?`, [id]);
+            return rows;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    },
+
+    async getCountUsers() {
+        const connection = await pool.getConnection();
+        try {
+            const [rows] = await connection.query(`SELECT id, username, first_name, last_name FROM users GROUP BY id`);
+            return rows;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    },
+
+    async getUser(user_id) {
+        const connection = await pool.getConnection();
+        try {
+            const [rows] = await connection.query(`SELECT * FROM users WHERE id = ?`, [user_id]);
+            return rows[0];
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    }
 }
 
 module.exports = db;
