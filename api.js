@@ -20,6 +20,9 @@ const simpleAuth = async (req, res, next) => {
     return next();
   }
   
+  if (req.headers.upgrade && req.headers.upgrade.toLowerCase() === 'websocket') {
+    return next();
+  }
 
   const authHeader = req.headers.authorization;
   if (authHeader && authHeader.startsWith('Basic ')) {
