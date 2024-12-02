@@ -34,6 +34,7 @@ router.post('/parties/transfer', voteController.transferPartyLeader)
 router.post('/rules', voteController.getAllRules)
 
 router.post('/session', voteController.session)
+router.post('/session/pending', voteController.getAllPendingSessions)
 router.post('/session/new', voteController.newSession)
 
 router.post('/laws/new', voteController.createLaw)

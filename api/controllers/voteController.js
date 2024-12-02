@@ -169,7 +169,26 @@ exports.newSession = async (req, res) => {
     let target_id = req.body.target_id ?? null;
     let value = req.body.value ?? null;
 
-    await db.insertSession(user_id, type, target_id, value).then((result) => {
+    var title = "";
+    if(type == "law") {
+        const law = await db.getLaw(target_id);
+        title = "Votacion para aprovar la " + law[0].title;
+    }else if(type == "ruleChange") {
+        const rule = await db.getRule(target_id);
+        title = "Votacion para cambiar la regla constitucional " + rule[0].name + " a " + value;
+    }else if(type == "control") {
+        title = "Sesion de control";
+    }
+
+    await db.insertSession(user_id, type, target_id, value, title).then((result) => {
+        res.status(200).json(result);
+    }).catch((err) => {
+        res.status(400).json({error: err});
+    });
+}
+
+exports.getAllPendingSessions = async (req, res) => {
+    await db.getPendingSessions().then((result) => {
         res.status(200).json(result);
     }).catch((err) => {
         res.status(400).json({error: err});

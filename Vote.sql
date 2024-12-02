@@ -85,9 +85,11 @@ CREATE TABLE articles(
     FOREIGN KEY (law_id) REFERENCES laws(id)
 );
 
+
 CREATE TABLE sessions(
     id int NOT NULL AUTO_INCREMENT,
     user_id int NOT NULL,
+    title VARCHAR(255) NOT NULL,
     type VARCHAR(255) NOT NULL,
     session_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     target_id int,

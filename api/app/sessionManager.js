@@ -1,3 +1,6 @@
+const Queue = require('./utils/Queue');
+const dbVote = require('../database/databaseVote');
+
 class SessionManager {
     constructor() {
         if (!SessionManager.instance) {
@@ -6,24 +9,57 @@ class SessionManager {
             this.seats = 0;
             this.forVotes = 0;
             this.againstVotes = 0;
-            this.title = "Votacion de ley";
-            this.type = "law";
+            this.title = "Votacion";
+            this.type = "none";
             this.law = null;
+            this.rule = null;
+            this.ruleValue = null;
             SessionManager.instance = this;
             console.log("SessionManager created");
             
-            
+            this.queue = new Queue();
+            this.init();
         }
 
         return SessionManager.instance;
     }
 
-    startSession(seats, law) {
+    async init() {
+        let sessions = await dbVote.getPendingSessions();
+        for(let session of sessions) {
+            this.queue.enqueue(session);
+        }
+        
+    }
+
+    startSession(seats, type, target_id, value) {
         this.users.clear();
         this.seats = seats;
-        this.type = "law";
-        this.law = law;
+        this.type = type;
+        if(type == "law") {
+            this.law = target_id;
+        }else if(type == "rule") {
+            this.rule = target_id;
+            this.ruleValue = value;
+        }
+
+
         this.isInSession = true;
+    }
+
+    getSession() {
+        return {
+            users: this.users,
+            inSession: this.isInSession,
+            seats: this.seats,
+            forVotes: this.forVotes,
+            againstVotes: this.againstVotes,
+            title: this.title,
+            type: this.type,
+            law: this.law,
+            rule: this.rule,
+            ruleValue: this.ruleValue
+        }
     }
 
     addUser(userId) {
@@ -59,6 +95,20 @@ class SessionManager {
         //Check vote type
 
         //Generate news
+
+        this.clear();
+    }
+
+    clear() {
+        this.users.clear();
+        this.seats = 0;
+        this.forVotes = 0;
+        this.againstVotes = 0;
+        this.title = "Votacion";
+        this.type = "none";
+        this.law = null;
+        this.rule = null;
+        this.ruleValue = null;
     }
 
 }

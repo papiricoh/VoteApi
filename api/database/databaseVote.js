@@ -218,11 +218,36 @@ const db = {
         }
     },
 
-    async insertSession(user_id, type, target_id, value) {
+
+    async getRule(id) {
         const connection = await pool.getConnection();
         try {
-            const result = await connection.query(`INSERT INTO sessions (user_id, type, target_id, value) VALUES (?, ?, ?, ?)`, [user_id, type, target_id, value]);
+            const [rows] = await connection.query(`SELECT * FROM rules WHERE id = ?`, [id]);
+            return rows;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    },
+
+    async insertSession(user_id, type, target_id, value, title) {
+        const connection = await pool.getConnection();
+        try {
+            const result = await connection.query(`INSERT INTO sessions (user_id, type, target_id, value, title) VALUES (?, ?, ?, ?, ?)`, [user_id, type, target_id, value, title]);
             return result[0].insertId;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    },
+
+    async getPendingSessions() {
+        const connection = await pool.getConnection();
+        try {
+            const [rows] = await connection.query(`SELECT * FROM sessions WHERE completed = 0 ORDER BY session_date ASC`);
+            return rows;
         }catch (err) {
             throw new Error("DB error: " + err);
         }finally {
