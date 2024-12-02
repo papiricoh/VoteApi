@@ -219,9 +219,10 @@ exports.startSession = async (req, res) => {
         return;
     }
 
-    //sessionManager.startSession(seats, type, target_id, value);
+    await sessionManager.startSession(seats, session.type, session.target_id, session.value, session.title, users);
 
-    res.status(200).json("OK");
+
+    res.status(200).json(await sessionManager.getSession());
 }
 
 exports.session = async (req, res) => {

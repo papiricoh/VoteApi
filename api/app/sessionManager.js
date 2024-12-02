@@ -7,9 +7,6 @@ class SessionManager {
             this.users = new Map();
             this.isInSession = false;
             this.seats = 0;
-            this.forVotes = 0;
-            this.againstVotes = 0;
-            this.title = "Votacion";
             this.type = "none";
             this.law = null;
             this.rule = null;
@@ -32,24 +29,33 @@ class SessionManager {
         
     }
 
-    startSession(seats, type, target_id, value) {
+    async startSession(seats, type, target_id, value, title, users) {
         this.users.clear();
         this.seats = seats;
         this.type = type;
+        this.title = title;
+        this.forVotes = 0;
+        this.againstVotes = 0;
         if(type == "law") {
             this.law = target_id;
-        }else if(type == "rule") {
+        }else if(type == "ruleChange") {
             this.rule = target_id;
             this.ruleValue = value;
         }
 
+        
+        for(let user of users) {
+            await this.addUser(user);
+        }
+        
+        
 
         this.isInSession = true;
     }
 
-    getSession() {
+    async getSession() {
         return {
-            users: this.users,
+            users: Array.from(this.users.values()),
             inSession: this.isInSession,
             seats: this.seats,
             forVotes: this.forVotes,
@@ -62,8 +68,9 @@ class SessionManager {
         }
     }
 
-    addUser(userId) {
-        this.users.set(userId, true);
+    async addUser(user) {
+        user.vote = "abstain";
+        this.users.set(user.id, user);
     }
 
     async vote(userId, vote) { //vote is either "for" or "against"
@@ -114,6 +121,6 @@ class SessionManager {
 }
 
 const instance = new SessionManager();
-Object.freeze(instance);
+//Object.freeze(instance);
 
 module.exports = instance;
