@@ -2,6 +2,8 @@ const Queue = require('./utils/Queue');
 const dbVote = require('../database/databaseVote');
 const db = require('../database/databaseVote');
 
+const sessionMinutes = 10;
+
 class SessionManager {
     constructor() {
         if (!SessionManager.instance) {
@@ -12,6 +14,8 @@ class SessionManager {
             this.law = null;
             this.rule = null;
             this.ruleValue = null;
+            this.startDate = null;
+            this.endDate = null;
             SessionManager.instance = this;
             console.log("SessionManager created");
             
@@ -37,6 +41,8 @@ class SessionManager {
         this.title = title;
         this.forVotes = 0;
         this.againstVotes = 0;
+        this.startDate = new Date();
+        this.endDate = new Date(this.startDate.getTime() + sessionMinutes * 60000);
         if(type == "law") {
             this.law = target_id;
         }else if(type == "ruleChange") {
@@ -66,7 +72,9 @@ class SessionManager {
             type: this.type,
             law: this.law,
             rule: this.rule,
-            ruleValue: this.ruleValue
+            ruleValue: this.ruleValue,
+            startDate: this.startDate,
+            endDate: this.endDate
         }
     }
 
