@@ -228,6 +228,7 @@ exports.startSession = async (req, res) => {
 exports.session = async (req, res) => {
     var response = {};
     
+    response = await sessionManager.getSession();
     response.inSession = sessionManager.isInSession;
     
     res.status(200).json(response);
