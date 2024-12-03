@@ -4,6 +4,7 @@ const mainController = require("../controllers/mainController")
 const voteController = require("../controllers/voteController")
 const websocketCotroller = require("../controllers/websocketController");
 const govController = require("../controllers/govController");
+const newsController = require("../controllers/newsController");
 
 /*
 #############################################################
@@ -58,6 +59,16 @@ router.post('/government/new_role', govController.createGovernmentRole)
 ##############   VOTE SESSION  ##############
 #############################################
 */
+
+
+
+/*
+#############################################
+##############   VOTE SESSION  ##############
+#############################################
+*/
+router.post('/news', newsController.getAllNews)
+router.post('/news/create', newsController.createNews)
 
 
 
