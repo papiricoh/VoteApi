@@ -71,7 +71,7 @@ const db = {
     async getUserParty(id) {
         const connection = await pool.getConnection();
         try {
-            const query = `Select * from parties where id = ?`;
+            const query = `Select * from parties where id = (SELECT party_id FROM users_parties WHERE user_id = ?)`;
             const [rows] = await connection.query(query, [id]);
             return rows[0];
         }catch (err) {
