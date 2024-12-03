@@ -17,6 +17,7 @@ class SessionManager {
             this.ruleValue = null;
             this.startDate = null;
             this.endDate = null;
+            this.session_id = null;
             SessionManager.instance = this;
             console.log("SessionManager created");
             
@@ -35,11 +36,12 @@ class SessionManager {
         
     }
 
-    async startSession(seats, type, target_id, value, title, users) {
+    async startSession(seats, type, target_id, value, title, users, session_id) {
         this.users.clear();
         this.seats = seats;
         this.type = type;
         this.title = title;
+        this.session_id = session_id;
         this.forVotes = 0;
         this.againstVotes = 0;
         this.startDate = new Date();
@@ -140,6 +142,10 @@ class SessionManager {
         }
         //Else if mocion de censura
 
+
+        //Mark session as ended
+        await db.endSession(this.session_id);
+
         //Generate news
 
         this.clear();
@@ -159,6 +165,7 @@ class SessionManager {
         this.law = null;
         this.rule = null;
         this.ruleValue = null;
+        this.session_id = null;
     }
 
 }

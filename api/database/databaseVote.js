@@ -303,6 +303,18 @@ const db = {
         }
     },
 
+    async endSession(id) {
+        const connection = await pool.getConnection();
+        try {
+            const result = await connection.query(`UPDATE sessions SET completed = 1 WHERE id = ?`, [id]);
+            return result[0].insertId;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    },
+
     async getCountUsers() {
         const connection = await pool.getConnection();
         try {
