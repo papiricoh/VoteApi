@@ -21,30 +21,21 @@ exports.createParty = async (req, res) => {
     const { name, label, ideology, user_id, logo, color } = req.body;
 
     const party = await db.getParty(user_id);
-    if(party && party.label != 'IND') {
+    if(party != null && party.label != 'IND') {
         res.status(400).json({error: "User already has a party"});
         return;
     }
-
+    
     await db.createParty(name, label, ideology, user_id, logo, color).then(async (result) => {
-        if(party) {
-            await db.joinParty(user_id, result).then((result) => {
-                res.status(200).json(result);
-                return;
-            }).catch((err) => {
-                res.status(400).json({error: err});
-                return;
-            });
-        }else {
-            await db.addToParty(user_id, result).then((result) => {
-                res.status(200).json(result);
-                return;
-            }).catch((err) => {
-                res.status(400).json({error: err});
-                return;
-            });
-        }
-        res.status(400).json({error: "error"});
+
+        
+        await db.joinParty(user_id, result).then((result2) => {
+            res.status(200).json(result2);
+            return;
+        }).catch((err) => {
+            res.status(400).json({error: err});
+            return;
+        });
     }).catch((err) => {
         res.status(400).json({error: err});
     });
@@ -70,20 +61,29 @@ exports.getAllParties = async (req, res) => {
 
 exports.leaveParty = async (req, res) => {
     const { user_id } = req.body;
-    const user = req.user;
+    const user = await db.getUser(user_id);
+
     if(user.id == user_id || user.perms > 2) {
         const party = await db.getParty(user_id);
-        if(party.leader == user_id) {
+        const members = await db.getPartyMembers(party.id);
+        
+        
+        if(party.leader == user_id && members.length > 1) {
             res.status(400).json({error: "Cannot leave party as leader"});
             return;
         }
-        await db.leaveParty(user_id).then(async (result) => {
 
-            await db.joinParty(user_id, 1).then((result) => {
-                res.status(200).json(result);
+        if(party.leader == user_id && members.length <= 1) {
+            await db.deleteParty(party.id).then((ress) => {
+                console.log("Party deleted");
+                
             }).catch((err) => {
                 res.status(400).json({error: err});
+                return;
             });
+        }
+        await db.joinParty(user_id, 1).then((result) => {
+            res.status(200).json(result);
         }).catch((err) => {
             res.status(400).json({error: err});
         });

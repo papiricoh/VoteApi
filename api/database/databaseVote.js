@@ -75,7 +75,33 @@ const db = {
         try {
             const query = `Select * from parties where id = ?`;
             const [rows] = await connection.query(query, [id]);
+            
             return rows[0];
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    },
+
+    async deleteParty(id) {
+        const connection = await pool.getConnection();
+        try {
+            const result = await connection.query(`DELETE FROM parties WHERE id = ?`, [id]);
+            return result[0].insertId;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    },
+
+    async getPartyMembers(id) {
+        const connection = await pool.getConnection();
+        try {
+            const query = `Select * from users_parties where party_id = (SELECT id FROM parties WHERE id = ?)`;
+            const [rows] = await connection.query(query, [id]);
+            return rows;
         }catch (err) {
             throw new Error("DB error: " + err);
         }finally {
