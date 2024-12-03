@@ -127,10 +127,10 @@ class SessionManager {
             const law = await db.getLaw(this.law);
             const party = await db.getParty(law.party_id);
             if(this.forVotes > this.againstVotes) {
-                await db.aproveLaw(law.id);
+                await db.aproveLaw(this.law);
                 
             }else {
-                await db.rejectLaw(law.id);
+                await db.rejectLaw(this.law);
             }
         }else if (this.type == "ruleChange") {
             if(this.forVotes > this.againstVotes) {
