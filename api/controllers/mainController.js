@@ -24,7 +24,7 @@ exports.register = async (req, res) => {
                     return;
                 }
                 const result = await db.register(data.username, data.email ?? null, hash, await generateToken(data.username), data.first_name ?? "John", data.last_name ?? "Doe");
-                await voteDb.joinParty(result, 1);
+                await voteDb.addToParty(result, 1);
                 
                 res.status(200).json(result);
 
