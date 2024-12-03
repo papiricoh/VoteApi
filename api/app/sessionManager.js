@@ -1,6 +1,7 @@
 const Queue = require('./utils/Queue');
 const dbVote = require('../database/databaseVote');
 const db = require('../database/databaseVote');
+const { broadcast } = require('../controllers/websocketController');
 
 const sessionMinutes = 10;
 
@@ -143,6 +144,9 @@ class SessionManager {
 
         this.clear();
         console.log("Session ended");
+
+        //Disconect webscocket
+        broadcast(JSON.stringify({type: "disconnect"}));
     }
 
     clear() {
