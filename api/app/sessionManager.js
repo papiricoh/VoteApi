@@ -3,7 +3,7 @@ const dbVote = require('../database/databaseVote');
 const db = require('../database/databaseVote');
 const { broadcast } = require('../controllers/websocketController');
 
-const sessionMinutes = 10;
+const sessionMinutes = 1;
 
 class SessionManager {
     constructor() {
