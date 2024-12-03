@@ -88,7 +88,7 @@ class SessionManager {
     }
 
     async vote(userId, vote) { //vote is either "for" or "against"
-        if (this.users.has(userId)) {
+        if (this.isInSession && this.users.has(userId)) {
             this.users.get(userId).vote = vote;
             await this.recalculateVotes();
             return true;

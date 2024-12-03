@@ -1,4 +1,6 @@
 //const db = require('../database/databaseGame');
+const sessionManager = require('../app/sessionManager');
+const WebSocket = require('ws');
 
 const clients = new Set();
 
@@ -13,6 +15,17 @@ exports.mainWS = async (ws, req) => {
     console.log(`Mensaje recibido: ${msg}`);
     if(msg.type === 'ping') {
       ws.send(JSON.stringify('pong'));
+      return;
+    }
+
+    if(msg.type === 'vote') {
+      await sessionManager.vote(msg.user_id, msg.vote);
+      if(!sessionManager.isInSession) {
+        ws.send(JSON.stringify({error: 'No hay ninguna sesión activa'}));
+        return;
+      }
+      data = { forVotes: sessionManager.forVotes, againstVotes: sessionManager.againstVotes };
+      broadcast(JSON.stringify(data));
       return;
     }
 
