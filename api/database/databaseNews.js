@@ -5,7 +5,7 @@ const db = {
     async getAllNews() {
         const connection = await pool.getConnection();
         try {
-            const [rows] = await connection.query("SELECT * FROM news ORDER BY date DESC");
+            const [rows] = await connection.query("SELECT * FROM news ORDER BY date DESC LIMIT 20");
             return rows;
         }catch (err) {
             throw new Error("DB error: " + err);
