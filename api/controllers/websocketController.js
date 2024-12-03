@@ -24,7 +24,7 @@ exports.mainWS = async (ws, req) => {
         ws.send(JSON.stringify({error: 'No hay ninguna sesión activa'}));
         return;
       }
-      data = { forVotes: sessionManager.forVotes, againstVotes: sessionManager.againstVotes };
+      data = { type: "vote", forVotes: sessionManager.forVotes, againstVotes: sessionManager.againstVotes };
       broadcast(JSON.stringify(data));
       return;
     }
