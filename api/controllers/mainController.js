@@ -78,7 +78,7 @@ exports.loginToken = async (req, res) => {
     const data = req.body;
     
     if(data.username && data.token) {
-        bcrypt.hash(data.password, saltRounds, async function(err, hash) {
+        //bcrypt.hash(data.password, saltRounds, async function(err, hash) {
             try {
                 const user = await db.getUserWithUsername(data.username);
                 
@@ -101,7 +101,7 @@ exports.loginToken = async (req, res) => {
             } catch (error) {
                 res.status(500).json({ error: "Register error " + error });
             }
-        });
+        //});
     }else {
         res.status(404).json({ error: "Missing fields"});
     }
