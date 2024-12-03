@@ -32,13 +32,6 @@ router.post('/parties/self', voteController.getParty)
 router.post('/parties/leave', voteController.leaveParty)
 router.post('/parties/transfer', voteController.transferPartyLeader)
 
-router.post('/rules', voteController.getAllRules)
-
-router.post('/session', voteController.session)
-router.post('/session/pending', voteController.getAllPendingSessions)
-router.post('/session/new', voteController.newSession)
-router.post('/session/start', voteController.startSession)
-
 router.post('/laws/new', voteController.createLaw)
 router.post('/laws', voteController.getAllLaws)
 router.post('/laws/signed', voteController.getAllSignedLaws)
@@ -59,6 +52,13 @@ router.post('/government/new_role', govController.createGovernmentRole)
 ##############   VOTE SESSION  ##############
 #############################################
 */
+
+router.post('/rules', voteController.getAllRules)
+
+router.post('/session', voteController.session)
+router.post('/session/pending', voteController.getAllPendingSessions)
+router.post('/session/new', voteController.newSession)
+router.post('/session/start', voteController.startSession)
 
 
 

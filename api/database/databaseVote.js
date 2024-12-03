@@ -22,7 +22,19 @@ const db = {
         const connection = await pool.getConnection();
         try {
             const result = await connection.query(`INSERT INTO parties (name, label, ideology, leader, logo, color) VALUES (?, ?, ?, ?, ?, ?)`, [name, label, ideology, user_id, logo, color]);
-            const result2 = await connection.query(`INSERT INTO users_parties (user_id, party_id) VALUES (?, ?)`, [user_id, result[0].insertId]);
+            
+            return result[0].insertId;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    },
+
+    async addToParty(user_id, party_id) {
+        const connection = await pool.getConnection();
+        try {
+            const result = await connection.query(`INSERT INTO users_parties (user_id, party_id) VALUES (?, ?)`, [user_id, party_id]);
             return result[0].insertId;
         }catch (err) {
             throw new Error("DB error: " + err);
@@ -34,11 +46,14 @@ const db = {
     async joinParty(user_id, party_id) {
         const connection = await pool.getConnection();
         try {
-            const result = await connection.query(`INSERT INTO users_parties (user_id, party_id) VALUES (?, ?)`, [user_id, party_id]);
-            return result[0].insertId;
-        }catch (err) {
+            const result = await connection.query(
+                `UPDATE users_parties SET party_id = ? WHERE user_id = ?`,
+                [party_id, user_id]
+            );
+            return result[0].affectedRows; // Devuelve el número de filas afectadas
+        } catch (err) {
             throw new Error("DB error: " + err);
-        }finally {
+        } finally {
             connection.release();
         }
     },
