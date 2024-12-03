@@ -62,33 +62,35 @@ exports.getAllParties = async (req, res) => {
 exports.leaveParty = async (req, res) => {
     const { user_id } = req.body;
     const user = await db.getUser(user_id);
+    const party = await db.getUserParty(user_id);
+    const partyMembers = await db.getPartyMembers(party.id);
 
-    if(user.id == user_id || user.perms > 2) {
-        const party = await db.getParty(user_id);
-        const members = await db.getPartyMembers(party.id);
-        
-        
-        if(party.leader == user_id && members.length > 1) {
-            res.status(400).json({error: "Cannot leave party as leader"});
-            return;
-        }
-
-        if(party.leader == user_id && members.length <= 1) {
-            await db.deleteParty(party.id).then((ress) => {
-                console.log("Party deleted");
-                
-            }).catch((err) => {
-                res.status(400).json({error: err});
-                return;
-            });
-        }
-        await db.joinParty(user_id, 1).then((result) => {
-            res.status(200).json(result);
-        }).catch((err) => {
-            res.status(400).json({error: err});
-        });
+    
+    
+    if(party.label == 'IND') {
+        res.status(400).json({error: "User is not in a party"});
+        return;
     }
 
+    await db.joinParty(user_id, 1).then((result) => {
+        res.status(200).json(result);
+    }).catch((err) => {
+        res.status(400).json({error: err});
+    });
+
+    if(partyMembers.length <= 1) {
+        await db.deleteParty(party.id).then((result) => {
+            console.log("Party deleted: ", result);
+            
+        }).catch((err) => {
+            console.log(err);
+            
+        });
+    }
+    //TODO: if leader asign new leader
+
+    
+    
 }
 
 exports.transferPartyLeader = async (req, res) => {
