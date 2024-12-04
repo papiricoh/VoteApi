@@ -106,11 +106,10 @@ CREATE TABLE sessions(
 CREATE TABLE government_members(
     id int NOT NULL AUTO_INCREMENT,
     role VARCHAR(255) NOT NULL,
-    user_id int NOT NULL,
+    user_id int,
 
     PRIMARY KEY (id),
     UNIQUE (role),
-    UNIQUE (user_id),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
@@ -169,3 +168,5 @@ INSERT INTO articles (title, content, law_id) VALUES
 ('Artículo 2', 'El artículo 2 define la estructura del gobierno, incluyendo el poder ejecutivo, legislativo y judicial, y sus respectivas funciones y responsabilidades.', @law_id),
 ('Artículo 3', 'El artículo 3 describe el proceso de enmienda de la constitución, permitiendo cambios y actualizaciones a través de un procedimiento legislativo específico.', @law_id);
 
+
+INSERT INTO government_members (role, user_id) VALUES ('Presidente', NULL);

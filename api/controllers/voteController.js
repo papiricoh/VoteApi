@@ -152,6 +152,28 @@ exports.getAllSignedLaws = async (req, res) => {
     });
 }
 
+exports.signLaw = async (req, res) => {
+    const { user_id, law_id } = req.body;
+    const user = await db.getUser(user_id);
+    const government = await db.getGovernment();
+    var isPresident = false;
+    for (let i = 0; i < government.length; i++) {
+        if(government[i].user_id == user_id && government[i].id == 1) {
+            isPresident = true;
+        }
+    }
+
+    if(user.perms > 7 || isPresident) {
+        await db.signLaw(law_id).then((result) => {
+            res.status(200).json(result);
+        }).catch((err) => {
+            res.status(400).json({error: err});
+        });
+    }else {
+        res.status(400).json({error: "User has no permissions"});
+    }
+}
+
 exports.getAllPendingLaws = async (req, res) => {
     await db.getAllPendingLaws().then((result) => {
         res.status(200).json(result);
