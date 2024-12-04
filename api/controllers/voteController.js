@@ -80,7 +80,7 @@ exports.leaveParty = async (req, res) => {
 
     if(partyMembers.length <= 1) {
         await db.deleteParty(party.id).then((result) => {
-            console.log("Party deleted: ", result);
+            console.log("Party deleted: ", party.label);
             
         }).catch((err) => {
             console.log(err);
@@ -89,7 +89,7 @@ exports.leaveParty = async (req, res) => {
     }
     //TODO: if leader asign new leader
 
-    
+
     
 }
 

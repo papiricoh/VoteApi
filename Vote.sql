@@ -44,6 +44,7 @@ CREATE TABLE users_parties(
 
 
     PRIMARY KEY (id),
+    UNIQUE (user_id),
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (party_id) REFERENCES parties(id)
 );
@@ -98,6 +99,7 @@ CREATE TABLE sessions(
 
 
     PRIMARY KEY (id),
+    UNIQUE(type, target_id),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
@@ -107,6 +109,8 @@ CREATE TABLE government_members(
     user_id int NOT NULL,
 
     PRIMARY KEY (id),
+    UNIQUE (role),
+    UNIQUE (user_id),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
