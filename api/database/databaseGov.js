@@ -5,7 +5,7 @@ const db = {
     async getGovernment() {
         const connection = await pool.getConnection();
         try {
-            const [rows] = await connection.query(`SELECT users.id AS user_id, government_members.id, government_members.role, users.first_name, users.last_name, users.username, parties.label, parties.name
+            const [rows] = await connection.query(`SELECT users.id AS user_id, government_members.id, government_members.role, users.first_name, users.last_name, users.username, parties.label, parties.name, parties.color
             FROM government_members
             INNER JOIN users ON government_members.user_id = users.id
             INNER JOIN users_parties ON government_members.user_id = users_parties.user_id

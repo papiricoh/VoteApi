@@ -103,9 +103,11 @@ CREATE TABLE sessions(
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
+
 CREATE TABLE government_members(
     id int NOT NULL AUTO_INCREMENT,
     role VARCHAR(255) NOT NULL,
+    perms INT NOT NULL DEFAULT 0,
     user_id int,
 
     PRIMARY KEY (id),
@@ -169,4 +171,4 @@ INSERT INTO articles (title, content, law_id) VALUES
 ('Artículo 3', 'El artículo 3 describe el proceso de enmienda de la constitución, permitiendo cambios y actualizaciones a través de un procedimiento legislativo específico.', @law_id);
 
 
-INSERT INTO government_members (role, user_id) VALUES ('Presidente', NULL);
+INSERT INTO government_members (role, user_id, perms) VALUES ('Presidente', NULL, 8);
