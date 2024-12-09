@@ -14,6 +14,19 @@ const db = {
         }
     },
 
+
+    async getNew(id) {
+        const connection = await pool.getConnection();
+        try {
+            const [rows] = await connection.query("SELECT * FROM news WHERE id = ? LIMIT 1", [id]);
+            return rows[0];
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    },
+
     async insertNew(title, subtitle, content, author, type) {
         const connection = await pool.getConnection();
         try {

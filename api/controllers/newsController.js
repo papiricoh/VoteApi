@@ -21,3 +21,14 @@ exports.createNews = async (req, res) => {
         res.status(404).json({ error: "Missing fields"});
     }
 }
+
+exports.getNew = async (req, res) => {
+    const { id } = req.params;
+
+
+    db.getNew(id).then((result) => {
+        res.status(200).json(result);
+    }).catch((err) => {
+        res.status(400).json(err);
+    });
+}

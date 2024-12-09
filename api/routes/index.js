@@ -69,6 +69,7 @@ router.post('/session/start', voteController.startSession)
 #############################################
 */
 router.post('/news', newsController.getAllNews)
+router.post('/news/:id', newsController.getNew)
 router.post('/news/create', newsController.createNews)
 
 
