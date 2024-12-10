@@ -46,6 +46,8 @@ router.get('/laws/:id', voteController.getLaw)
 */
 router.post('/government', govController.getGovernment)
 router.post('/government/new_role', govController.createGovernmentRole)
+router.post('/government/self', govController.getSelfRole)
+router.post('/government/alter_role', govController.alterGovernmentRole)
 
 
 /*

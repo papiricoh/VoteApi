@@ -17,6 +17,26 @@ exports.getGovernment = async (req, res) => {
     });
 }
 
+exports.getSelfRole = async (req, res) => {
+    const { user_id } = req.body;
+
+    db.getGovernmentRole(user_id).then((result) => {
+        res.status(200).json(result);
+    }).catch((err) => {
+        res.status(400).json(err);
+    });
+}
+
+exports.alterGovernmentRole = async (req, res) => {
+    const { user_id, target_id, role, perms } = req.body;
+
+    db.alterFromGovernmentWithPerms(target_id, role, perms).then((result) => {
+        res.status(200).json(result);
+    }).catch((err) => {
+        res.status(400).json(err);
+    });
+}
+
 exports.createGovernmentRole = async (req, res) => {
     const { user_id, target_id, role, perms } = req.body;
 

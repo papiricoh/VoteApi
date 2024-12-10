@@ -64,8 +64,31 @@ const db = {
         }finally {
             connection.release();
         }
-    }
+    },
 
+    async alterFromGovernmentWithPerms(user_id, role, perms) {
+        const connection = await pool.getConnection();
+        try {
+            const result = await connection.query(`UPDATE government_members SET role = ?, perms = ? WHERE user_id = ?`, [role, perms, user_id]);
+            return result[0].insertId;
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    },
+
+    async getSelfRole(user_id) {
+        const connection = await pool.getConnection();
+        try {
+            const [rows] = await connection.query(`SELECT * FROM government_members WHERE user_id = ?`, [user_id]);
+            return rows[0];
+        }catch (err) {
+            throw new Error("DB error: " + err);
+        }finally {
+            connection.release();
+        }
+    }
 }
 
 module.exports = db;
