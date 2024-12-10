@@ -3,9 +3,9 @@ const dbMain = require('../database/databaseMain');
 
 const perms = {
     "admin": 10,
-    "president": 4,
-    "vice_president": 3,
-    "minister": 2,
+    "president": 8,
+    "vice_president": 7,
+    "minister": 6,
     "secretary": 1
 }
 
