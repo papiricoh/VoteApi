@@ -103,16 +103,17 @@ CREATE TABLE sessions(
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-
 CREATE TABLE government_members(
     id int NOT NULL AUTO_INCREMENT,
     role VARCHAR(255) NOT NULL,
     perms INT NOT NULL DEFAULT 0,
     user_id int,
+    depends_of int,
 
     PRIMARY KEY (id),
     UNIQUE (role),
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (depends_of) REFERENCES government_members(id)
 );
 
 CREATE TABLE news(
